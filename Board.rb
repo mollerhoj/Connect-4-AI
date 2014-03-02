@@ -1,16 +1,13 @@
 require "Matrix"
 require "pp"
 
-BOARD_WIDTH = 3
-BOARD_HEIGHT = 3
-
 class Board < Matrix
 
-  def self.construct
-    Board.build(BOARD_HEIGHT,BOARD_WIDTH) {"."}
+  def self.construct(width,height)
+    Board.build(height,width) {"."}
   end
 
-  def coin_drop column,sign
+  def drop_coin column,sign
     height.times do |x|
       row = height-1-x
       if self[row,column] == "."
@@ -37,12 +34,16 @@ class Board < Matrix
     end
     return true
   end
+
+  def []=(x,y,e)
+    super
+  end
   
   def render
     str = ''
     self.each_with_index do |e, row, col|
       str+= "#{e}"
-      if col == BOARD_WIDTH-1
+      if col == width-1
         str+= "\n"
       end
     end

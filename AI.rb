@@ -1,23 +1,17 @@
 class AI
 
-  def initialize board
-    @board = board
-  end
-
   def next_move turn
     minimax
   end
 
-  private
-
   def minimax board
-    max_value @board
+    max_value board,nil
   end
 
   def actions board
     actions = []
     board.width.times do |x|
-      if !board.full?
+      if !board.column_full? x
         actions << x
       end
     end
@@ -25,37 +19,49 @@ class AI
   end
 
   def utility board
-
+    x = 0
+    board.each_with_index do |e, row, col|
+      if e == 'O'
+        x += col+1
+      end
+    end
+    x
   end
 
-  def terminal_test? board
-    board.full?
+  def terminal? board
+    if board.full?
+      puts board
+      true
+    else
+      false
+    end
   end
 
-  def min_value board
-    if terminal_test?(board) then return utility(board) end
+  def min_value board,a
+    if terminal?(board) then return [utility(board),a] end
 
     m = 999
-    actions.each do |action|
-      new_board = @board.clone
-      new_board.coin_drop action,"X"
-      v = max_value new_board
-      if v < m then m = v end
+    actions(board).each do |action|
+      new_board = board.clone
+      new_board.drop_coin action,"X"
+      v = max_value(new_board,action)[0]
+      if v < m then m = v;a = action end
     end
-    m
+    [m,a]
   end
 
-  def max_value board
-    if terminal_test?(board) then return utility(board) end
+  def max_value board,a
+    if terminal?(board) then return [a,utility(board),a] end
 
     m = -999
-    actions.each do |action|
-      new_board = @board.clone
-      new_board.coin_drop action,"O"
-      v = max_value new_board
-      if v > m then m = v end
+    actions(board).each do |action|
+      new_board = board.clone
+      new_board.drop_coin action,"O"
+      v = min_value(new_board,action)[0]
+      if v > m then m = v;a = action end
     end
-    m
+    [m,a]
   end
+
 
 end
