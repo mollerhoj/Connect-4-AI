@@ -1,20 +1,21 @@
 require "./spec/.spec_helper"
 
 describe Board do
-  
-  before do
-    @board = Board.construct(3,3)
-  end
 
   it "should be able drop a coin" do
-    assert @board[2,0] == '.'
+    @board = Board.construct(3,3)
+    assert @board[0,2] == '.'
     @board.drop_coin 0,'X'
-    assert @board[2,0] == 'X'
+    @board.drop_coin 1,'O'
+    assert @board[0,2] == 'X'
+    assert @board[1,2] == 'O'
   end
 
   it "should tell coin at position" do
-    @board[0,0] = 'X'
-    assert @board[0,0] == 'X'
+    @board = Board[['_','_'],['O','_']]
+    @board[1,0] = 'X'
+    assert @board[1,0] == 'X'
+    assert @board[0,1] == 'O'
   end
 
   it "should tell if column is full" do
@@ -32,11 +33,22 @@ describe Board do
   it "should tell if board is full" do
     @board = Board[['X','.'],['X','O']]
     assert false == @board.full?
-    @board[0,1] = 'X'
+    @board[1,0] = 'X'
     assert @board.full?
   end
 
+  it "should clone" do
+    @board = Board[['1','1'],['1','1']]
+    @board2 = @board.clone
+    @board2[0,0] = '2'
+    assert @board[0,0] == '1'
+    assert @board2[0,0] == '2'
+  end
+
   it "should render" do
-    assert @board.render == "...\n...\n...\n"
+    @board = Board[['X','.','.'],
+                   ['X','O','O'],
+                   ['O','X','X']]
+    assert @board.render == "X..\nXOO\nOXX\n"
   end
 end

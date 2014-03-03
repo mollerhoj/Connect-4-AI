@@ -8,10 +8,10 @@ class Board < Matrix
   end
 
   def drop_coin column,sign
-    height.times do |x|
-      row = height-1-x
-      if self[row,column] == "."
-        self[row,column] = sign
+    height.times do |y|
+      row = height-1-y
+      if self[column,row] == "."
+        self[column,row] = sign
         break
       end
     end
@@ -19,7 +19,7 @@ class Board < Matrix
 
   def column_full? column
     height.times do |row|
-      if self[row,column] == "."
+      if self[column,row] == "."
         return false
       end
     end
@@ -27,7 +27,7 @@ class Board < Matrix
   end
 
   def full?
-    height.times do |column|
+    width.times do |column|
       if not column_full? column
         return false
       end
@@ -35,8 +35,12 @@ class Board < Matrix
     return true
   end
 
-  def []=(x,y,e)
-    super
+  def []=(y,x,e)
+    super(x,y,e)
+  end
+
+  def [](y,x)
+    super(x,y)
   end
   
   def render

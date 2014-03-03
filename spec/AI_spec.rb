@@ -11,8 +11,8 @@ describe AI do
 
   # here: utility based on col+1 per coin
   it "should compute utility from board" do
-    @board = Board[['.','O'],['.','O']]
-    assert_equal 4,@ai.utility(@board)
+    @board = Board[['X','O'],['X','O']]
+    assert_equal 2,@ai.utility(@board)
   end
 
   # here: is board full?
@@ -31,16 +31,11 @@ describe AI do
 
   it "should be tested" do
     @board = Board[['.','.','.'],
-                   ['.','.','.']]
-    puts "#{@ai.minimax @board}"
-  end
-
-  it "should be able to clone" do
-    @board = Board[['1','1'],['1','1']]
-    @board2 = @board.clone
-    @board2[0,0] = '2'
-    assert @board[0,0] == '1'
-    assert @board2[0,0] == '2'
+                   ['.','.','.'],
+                   ['.','.','.'],
+                   ['.','.','E']]
+    m = @ai.minimax(@board)
+    puts "RESULT #{m[0]}, TO GO: #{m[1]}"
   end
 
 end
