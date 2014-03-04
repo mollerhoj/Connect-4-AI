@@ -16,15 +16,15 @@ Project report
 
 # Design goals
 
-Instead of implementing implementation specific optimization for the beginning
+Instead of implementing implementation specific optimisation for the beginning
 (which is usually a bad idea), I have had my focus on a clean and readable
 implementation. Since I have been working alone and on a schedule, I have
-prefered a quick (and a little bit hackish) development style.
+preferred a quick (and a little bit hackish) development style.
 
 I've also used the project to practice my TDD-development skills. Using
 minitest instead of Rspec of the first time. (It has been a mixed experience)
 
-The testes do not cover all parts of the code (As I skiped them I just hacked
+The testes do not cover all parts of the code (As I skipped them I just hacked
 my way through as the project was about to be finished). However, no tests
 are broken, and if one where to continue development, it should be quite easy
 to get good coverage quickly.
@@ -40,15 +40,15 @@ to get good coverage quickly.
   board. It uses the minimax algorithm described below.
 
 ## Referee
-  Jugdes if a player has won, also home of the heuristic used by the AI.
+  Judges whether or not a player has won, also home of the heuristic used by the AI.
 
 # The minimax algorithm
 
   From wikipedia:
   "Minimax (sometimes MinMax or MM) is a decision rule used in decision
-  theory, game theory, statistics and philosophy for minimizing the possible
+  theory, game theory, statistics and philosophy for minimising the possible
   loss for a worst case (maximum loss) scenario. Alternatively, it can be
-  thought of as maximizing the minimum gain (maximin or MaxMin). Originally
+  thought of as maximising the minimum gain (maximin or MaxMin). Originally
   formulated for two-player zero-sum game theory, covering both the cases
   where players take alternate moves and those where they make simultaneous
   moves, it has also been extended to more complex games and to general
@@ -56,18 +56,18 @@ to get good coverage quickly.
 
 # alpha beta pruning
   From wikipedia:
-  Alpha–beta pruning is a search algorithm that seeks to decrease the number of nodes that are evaluated by the minimax algorithm in its search tree. It is an adversarial search algorithm used commonly for machine playing of two-player games (Tic-tac-toe, Chess, Go, etc.). It stops completely evaluating a move when at least one possibility has been found that proves the move to be worse than a previously examined move. Such moves need not be evaluated further. When applied to a standard minimax tree, it returns the same move as minimax would, but prunes away branches that cannot possibly influence the final decision.
+  Alpha-beta pruning is a search algorithm that seeks to decrease the number of nodes that are evaluated by the minimax algorithm in its search tree. It is an adversarial search algorithm used commonly for machine playing of two-player games (Tic-tac-toe, Chess, Go, etc.). It stops completely evaluating a move when at least one possibility has been found that proves the move to be worse than a previously examined move. Such moves need not be evaluated further. When applied to a standard minimax tree, it returns the same move as minimax would, but prunes away branches that cannot possibly influence the final decision.
 
 # Cut-off
-  Since it is too computationally expensive to search the entire gametree,
+  Since it is too computationally expensive to search the entire game tree,
   my algorithm stops traversing the tree at a given depth. This can be
-  thought of as a number of moves the AI 'thinks' foreward. A search depth
+  thought of as a number of moves the AI 'thinks' forward. A search depth
   of 5 or below have turned out to give a reasonable response time. With the
-  optimizations mentioned below, it should be possible to go deeper.
+  optimisations mentioned below, it should be possible to go deeper.
 
-# Heurisitic
+# Heuristic
 
-  The heurisitic I have implemented is quite heavy. I checks every single
+  The heuristic I have implemented is quite heavy. I checks every single
   possible combination of 4 cells in which it is possible to win the game. To
   so, we first have to determine those combinations. Lets count them:
 
@@ -124,22 +124,22 @@ to get good coverage quickly.
 
 # Some thoughts
 
-- An even smarter heuristic could look at more game specfic rules, e.g:
+- An even smarter heuristic could look at more game specific rules, e.g:
   threats (3 connected coins) that can no longer come into play because a
   threat below makes it impossible to reach to threat above.
 
-- The Board class inhearits the Matrix class from the standard library. I have
+- The Board class inherits the Matrix class from the standard library. I have
 regretted this decision since the Matrix class is horrible. Inconsistent
 methods and bad naming makes it a pain to work with.
 
-# Implementation optimizations
+# Implementation optimisations
 
 Experimentation with a lighter heuristic might allow the search to go
 deeper, and therefore yield a smarter AI.
 
 Since nothing is ever erased from the board, a smart heuristic could save the 
 previously calculated heuristic score, and add to that, based on the new move.
-Then it would be sufficient to check only the winpositions that is affect by
+Then it would be sufficient to check only the win positions that is affect by
 the new move.
 
 # Conclusion
