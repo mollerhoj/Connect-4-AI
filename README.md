@@ -24,9 +24,9 @@ preferred a quick (and a little bit hackish) development style.
 I've also used the project to practice my TDD-development skills. Using
 minitest instead of Rspec of the first time. (It has been a mixed experience)
 
-The testes do not cover all parts of the code (As I skipped them I just hacked
+The testes do not cover all parts of the code (As I skipped them and just hacked
 my way through as the project was about to be finished). However, no tests
-are broken, and if one where to continue development, it should be quite easy
+are broken, and if one were to continue development, it should be quite easy
 to get good coverage quickly.
 
 ### A description of the files:
@@ -56,7 +56,7 @@ to get good coverage quickly.
   moves, it has also been extended to more complex games and to general
   decision making in the presence of uncertainty."
 
-### alpha beta pruning
+### Alpha-beta pruning
   From wikipedia:
   Alpha-beta pruning is a search algorithm that seeks to decrease the number of nodes that are evaluated by the minimax algorithm in its search tree. It is an adversarial search algorithm used commonly for machine playing of two-player games (Tic-tac-toe, Chess, Go, etc.). It stops completely evaluating a move when at least one possibility has been found that proves the move to be worse than a previously examined move. Such moves need not be evaluated further. When applied to a standard minimax tree, it returns the same move as minimax would, but prunes away branches that cannot possibly influence the final decision.
 
@@ -132,7 +132,7 @@ to get good coverage quickly.
 
 - An even smarter heuristic could look at more game specific rules, e.g:
   threats (3 connected coins) that can no longer come into play because a
-  threat below makes it impossible to reach to threat above.
+  threat below makes it impossible to reach the threat above.
 
 - The Board class inherits the Matrix class from the standard library. I have
 regretted this decision since the Matrix class is horrible. Inconsistent
