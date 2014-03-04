@@ -14,7 +14,7 @@ want to keep your sanity, I would stop reading now.)
 Project report
 ==============
 
-## Design goals
+### Design goals
 
 Instead of implementing implementation specific optimisation for the beginning
 (which is usually a bad idea), I have had my focus on a clean and readable
@@ -29,22 +29,22 @@ my way through as the project was about to be finished). However, no tests
 are broken, and if one where to continue development, it should be quite easy
 to get good coverage quickly.
 
-# A description of the files:
+### A description of the files:
 
-## Game
+#### Game
   A little script that starts a standard Human vs. CPU game.
   
-### Board
+#### Board
   A matrix representing the board. Can asked about full columns and coins can be dropped in the columns. It also features a colorful render function.
 
-### AI
+#### AI
   An AI whose 'next_move' function returns the best move found at a given
   board. It uses the minimax algorithm described below.
 
-### Referee
+#### Referee
   Judges whether or not a player has won, also home of the heuristic used by the AI.
 
-## The minimax algorithm
+### The minimax algorithm
 
   From wikipedia:
   "Minimax (sometimes MinMax or MM) is a decision rule used in decision
@@ -56,18 +56,18 @@ to get good coverage quickly.
   moves, it has also been extended to more complex games and to general
   decision making in the presence of uncertainty."
 
-## alpha beta pruning
+### alpha beta pruning
   From wikipedia:
   Alpha-beta pruning is a search algorithm that seeks to decrease the number of nodes that are evaluated by the minimax algorithm in its search tree. It is an adversarial search algorithm used commonly for machine playing of two-player games (Tic-tac-toe, Chess, Go, etc.). It stops completely evaluating a move when at least one possibility has been found that proves the move to be worse than a previously examined move. Such moves need not be evaluated further. When applied to a standard minimax tree, it returns the same move as minimax would, but prunes away branches that cannot possibly influence the final decision.
 
-## Cut-off
+### Cut-off
   Since it is too computationally expensive to search the entire game tree,
   my algorithm stops traversing the tree at a given depth. This can be
   thought of as a number of moves the AI 'thinks' forward. A search depth
   of 5 or below have turned out to give a reasonable response time. With the
   optimisations mentioned below, it should be possible to go deeper.
 
-## Heuristic
+### Heuristic
 
   The heuristic I have implemented is quite heavy. I checks every single
   possible combination of 4 cells in which it is possible to win the game. To do
@@ -113,7 +113,7 @@ to get good coverage quickly.
   This gives a total of 24+21+24 69 spaces to check. Now, each space is
   assigned a score in the following way:
 
-# Score assigned to a possible win space
+### Score assigned to a possible win space
 
   The heuristic gives points to a space of four cells in which it might be
   possible to get a 4x4. if both X's and O's are present, it is not possible
@@ -128,7 +128,7 @@ to get good coverage quickly.
   * For 3 X's: -100
   * For 4 X's: -1000
 
-## Some thoughts
+### Some thoughts
 
 - An even smarter heuristic could look at more game specific rules, e.g:
   threats (3 connected coins) that can no longer come into play because a
@@ -138,7 +138,7 @@ to get good coverage quickly.
 regretted this decision since the Matrix class is horrible. Inconsistent
 methods and bad naming makes it a pain to work with.
 
-## Implementation optimisations
+### Implementation optimisations
 
 Experimentation with a lighter heuristic might allow the search to go
 deeper, and therefore yield a smarter AI.
@@ -154,7 +154,7 @@ Since there are 6\*7=42 cells, and they can have 3 values 'X','O' and '.', they
 could be represented with max 42\*2=84 bits. I have not measured the bitsize of
 a object of the Board class, but I'm pretty sure it's a lot bigger.
 
-## Conclusion
+### Conclusion
 
 The AI is quite fun to play against: Especially when you learn its weaknesses.
 The guys from my dorm find it to be quite a challenge.
