@@ -14,7 +14,7 @@ want to keep your sanity, I would stop reading now.)
 Project report
 ==============
 
-# Design goals
+## Design goals
 
 Instead of implementing implementation specific optimisation for the beginning
 (which is usually a bad idea), I have had my focus on a clean and readable
@@ -33,16 +33,18 @@ to get good coverage quickly.
 
 ## Game
   A little script that starts a standard Human vs. CPU game.
-## Board
+  
+### Board
+  A matrix representing the board. Can asked about full columns and coins can be dropped in the columns. It also features a colorful render function.
 
-## AI
-  And AI whose 'next_move' function returns the best move found at a given
+### AI
+  An AI whose 'next_move' function returns the best move found at a given
   board. It uses the minimax algorithm described below.
 
-## Referee
+### Referee
   Judges whether or not a player has won, also home of the heuristic used by the AI.
 
-# The minimax algorithm
+## The minimax algorithm
 
   From wikipedia:
   "Minimax (sometimes MinMax or MM) is a decision rule used in decision
@@ -54,21 +56,21 @@ to get good coverage quickly.
   moves, it has also been extended to more complex games and to general
   decision making in the presence of uncertainty."
 
-# alpha beta pruning
+## alpha beta pruning
   From wikipedia:
   Alpha-beta pruning is a search algorithm that seeks to decrease the number of nodes that are evaluated by the minimax algorithm in its search tree. It is an adversarial search algorithm used commonly for machine playing of two-player games (Tic-tac-toe, Chess, Go, etc.). It stops completely evaluating a move when at least one possibility has been found that proves the move to be worse than a previously examined move. Such moves need not be evaluated further. When applied to a standard minimax tree, it returns the same move as minimax would, but prunes away branches that cannot possibly influence the final decision.
 
-# Cut-off
+## Cut-off
   Since it is too computationally expensive to search the entire game tree,
   my algorithm stops traversing the tree at a given depth. This can be
   thought of as a number of moves the AI 'thinks' forward. A search depth
   of 5 or below have turned out to give a reasonable response time. With the
   optimisations mentioned below, it should be possible to go deeper.
 
-# Heuristic
+## Heuristic
 
   The heuristic I have implemented is quite heavy. I checks every single
-  possible combination of 4 cells in which it is possible to win the game. To
+  possible combination of 4 cells in which it is possible to win the game. To do
   so, we first have to determine those combinations. Lets count them:
 
   On a normal 7x6 sized board:
@@ -88,21 +90,25 @@ to get good coverage quickly.
   If we move down and to the right diagonally, then the spaces can start from
   the following positions:
 
+  ```javascript
   xxxx...
   xxxx...
   xxxx...
   .......
   .......
   .......
+  ```
 
   Likewise for moving diagonally to the right and upwards:
 
+  ```javascript
   .......
   .......
   .......
   xxxx...
   xxxx...
   xxxx...
+  ```
 
   This gives a total of 24+21+24 69 spaces to check. Now, each space is
   assigned a score in the following way:
@@ -113,16 +119,16 @@ to get good coverage quickly.
   possible to get a 4x4. if both X's and O's are present, it is not possible
   to get a 4x4, and the function yields 0. Otherwise, the function returns: 
 
-  For 1 O:   1
-  For 2 O's: 10
-  For 3 O's: 100
-  For 4 O's: 1000
-  For 1 X:   -1
-  For 2 X's: -10
-  For 3 X's: -100
-  For 4 X's: -1000
+  * For 1 O:   1
+  * For 2 O's: 10
+  * For 3 O's: 100
+  * For 4 O's: 1000
+  * For 1 X:   -1
+  * For 2 X's: -10
+  * For 3 X's: -100
+  * For 4 X's: -1000
 
-# Some thoughts
+## Some thoughts
 
 - An even smarter heuristic could look at more game specific rules, e.g:
   threats (3 connected coins) that can no longer come into play because a
@@ -132,7 +138,7 @@ to get good coverage quickly.
 regretted this decision since the Matrix class is horrible. Inconsistent
 methods and bad naming makes it a pain to work with.
 
-# Implementation optimisations
+## Implementation optimisations
 
 Experimentation with a lighter heuristic might allow the search to go
 deeper, and therefore yield a smarter AI.
@@ -142,7 +148,13 @@ previously calculated heuristic score, and add to that, based on the new move.
 Then it would be sufficient to check only the win positions that is affect by
 the new move.
 
-# Conclusion
+It would be very possible to save a lot of memory. My implementation clones
+objects of matrixes of strings. These could be implemented with bits instead.
+Since there are 6\*7=42 cells, and they can have 3 values 'X','O' and '.', they
+could be represented with max 42\*2=84 bits. I have not measured the bitsize of
+a object of the Board class, but I'm pretty sure it's a lot bigger.
+
+## Conclusion
 
 The AI is quite fun to play against: Especially when you learn its weaknesses.
 The guys from my dorm find it to be quite a challenge.
