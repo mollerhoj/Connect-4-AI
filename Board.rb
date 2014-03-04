@@ -44,9 +44,13 @@ class Board < Matrix
   end
   
   def render
-    str = ''
+    str = "0123456\n"
     self.each_with_index do |e, row, col|
-      str+= "#{e}"
+
+      if e == 'X' then str+= "\e[32mX\e[0m" end
+      if e == 'O' then str+= "\e[31mO\e[0m" end
+      if e == '.' then str+= "." end
+
       if col == width-1
         str+= "\n"
       end
