@@ -37,7 +37,6 @@ describe AI do
                    ['.','.','.','.','.','.','.'],
                    ['.','.','.','.','.','.','.']]
     m = @ai.minimax(@board)
-    puts "RESULT #{m[0]}, TO GO: #{m[1]}"
   end
 
   it "should report best line" do

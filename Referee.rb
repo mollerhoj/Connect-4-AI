@@ -1,6 +1,7 @@
 class Referee
 
-  def initialize func=:col
+  # if the referee is initialized with :winner, then it only jugdes who has won.
+  def initialize func=:heuristic
     @func = func
   end
 
@@ -11,10 +12,6 @@ class Referee
     s+=all_diagonal_up_score board
     s+=all_diagonal_down_score board
     s
-  end
-
-  def winner? board
-
   end
 
   def horizontal_score board
@@ -77,7 +74,25 @@ class Referee
     val(board[x,y],board[x+1,y-1],board[x+2,y-2],board[x+3,y-3])
   end
 
-  def col a,b,c,d
+  # Choose function from initial set
+  def val a,b,c,d
+    self.send(@func,a,b,c,d)
+  end
+
+  # The heuristic gives points to a space of four cells in which it might be
+  # possible to get a 4x4. if both X's and O's are present, it is not possible
+  # to get a 4x4, and the function yields 0. Otherwise, the function returns: 
+  #
+  # For 1 O:   1
+  # For 2 O's: 10
+  # For 3 O's: 100
+  # For 4 O's: 1000
+  # For 1 X:   -1
+  # For 2 X's: -10
+  # For 3 X's: -100
+  # For 4 X's: -1000
+
+  def heuristic a,b,c,d
     x = 0
     o = 0
     [a,b,c,d].each do |e|
@@ -85,13 +100,12 @@ class Referee
       if e == 'O' then o+=1 end
     end
     if x>0 and o>0 then return 0 end
-    if x>0 then return -(10**x) else return 10**o end
+    if x>0 then return -(10**(x-1)) end
+    if o>0 then return 10**(o-1) end
+    return 0
   end
 
-  def val a,b,c,d
-    self.send(@func,a,b,c,d)
-  end
-
+  # return 1 if CPU won, -1 if player won, and 0 otherwise
   def winner a,b,c,d
     x = 0
     o = 0

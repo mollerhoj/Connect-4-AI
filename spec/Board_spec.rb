@@ -49,6 +49,6 @@ describe Board do
     @board = Board[['X','.','.'],
                    ['X','O','O'],
                    ['O','X','X']]
-    assert @board.render == "X..\nXOO\nOXX\n"
+    assert_equal @board.simple_render,"X..\nXOO\nOXX\n"
   end
 end

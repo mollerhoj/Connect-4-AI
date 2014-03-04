@@ -14,7 +14,7 @@ describe Referee do
     board = Board[['O','X','.','.','O']]
     assert @referee.row_score(0,board) == 0
     board = Board[['.','X','X','X','X']]
-    assert_equal @referee.row_score(0,board),-7
+    assert_equal @referee.row_score(0,board),-1100
   end
 
   it "should give a score from a board" do
@@ -23,12 +23,12 @@ describe Referee do
                   ['.','.','.','X'],
                   ['.','.','.','X'],
                   ['.','.','O','X']]
-    assert_equal @referee.score(board),-12
+    assert_equal @referee.score(board),-1105
   end
 
   it "should give a row score to a row of a board" do
     board = Board[['O'],['.'],['O'],['.'],['.']]
-    assert_equal @referee.column_score(0,board),3
+    assert_equal @referee.column_score(0,board),11
   end
 
   it "should give a diagonal_down score from a position of a board" do
@@ -72,7 +72,7 @@ describe Referee do
                   ['O','X','.','.','.'],
                   ['O','X','.','.','O'],
                   ['.','X','X','X','X']]
-    assert_equal @referee.horizontal_score(board),-7
+    assert_equal @referee.horizontal_score(board),-1100
   end
 
   it "should give vertical score to a board" do
@@ -81,15 +81,15 @@ describe Referee do
                   ['.','.','.','X'],
                   ['.','.','.','X'],
                   ['.','.','O','X']]
-    assert_equal @referee.vertical_score(board),-7
+    assert_equal @referee.vertical_score(board),-1100
   end
 
   it "should give a score from a collection of placements" do
-    assert @referee.col('X','.','.','.') == -1
-    assert @referee.col('O','.','.','.') == 1
-    assert @referee.col('O','.','X','.') == 0
-    assert @referee.col('.','.','.','.') == 0
-    assert @referee.col('X','.','X','.') == -2
+    assert @referee.heuristic('X','.','.','.') == -1
+    assert @referee.heuristic('O','.','.','.') == 1
+    assert @referee.heuristic('O','.','X','.') == 0
+    assert_equal @referee.heuristic('.','.','.','.'),0
+    assert @referee.heuristic('X','.','X','.') == -10
   end
 
 end

@@ -42,6 +42,17 @@ class Board < Matrix
   def [](y,x)
     super(x,y)
   end
+
+  def simple_render
+    str = ""
+    self.each_with_index do |e, row, col|
+      str += "#{e}"
+      if col == width-1
+        str+= "\n"
+      end
+    end
+    str
+  end
   
   def render
     str = "0123456\n"

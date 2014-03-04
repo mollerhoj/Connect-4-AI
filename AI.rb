@@ -1,5 +1,9 @@
 class AI
 
+  BIGINT = 9999999 #Yes, I am lazy
+  CUT_DEPTH = 3 #1-3 is quick. 5 is slow (within about a minute), but smart. 
+                #  Could be used as a difficulty setting
+
   def initialize
     @referee = Referee.new
     @win_referee = Referee.new(:winner)
@@ -33,7 +37,7 @@ class AI
   end
 
   def cut_off? board,depth
-    if depth >= 3 || board.full? || @win_referee.score(board) != 0
+    if depth >= CUT_DEPTH || board.full? || @win_referee.score(board) != 0
       true
     else
       false
@@ -45,15 +49,15 @@ class AI
   end
 
   def minimax board
-    s = max_value board,nil,-999,999,0
-    puts "move #{s[1]} yields #{s[0]} points."
+    s = max_value board,nil,-BIGINT,BIGINT,0
+    #puts "move #{s[1]} yields #{s[0]} points."
     s
   end
 
   def min_value board,pre_action,a,b,depth
     if cut_off?(board,depth) then return [evaluate(board),pre_action] end
 
-    m = 9999999
+    m = BIGINT
     actions(board).each do |action|
       new_board = board.clone
       new_board.drop_coin action,"X"
@@ -68,7 +72,7 @@ class AI
   def max_value board,pre_action,a,b,depth
     if cut_off?(board,depth) then return [evaluate(board),pre_action] end
 
-    m = -9999999
+    m = -BIGINT
     actions(board).each do |action|
       new_board = board.clone
       new_board.drop_coin action,"O"
