@@ -16,13 +16,13 @@ Project report
 
 ### Design goals
 
-Instead of implementing implementation specific optimisation for the beginning
+Instead of implementing implementation specific optimisation from the beginning
 (which is usually a bad idea), I have had my focus on a clean and readable
 implementation. Since I have been working alone and on a schedule, I have
 preferred a quick (and a little bit hackish) development style.
 
 I've also used the project to practice my TDD-development skills. Using
-minitest instead of Rspec of the first time. (It has been a mixed experience)
+minitest instead of Rspec for the first time. (It has been a mixed experience)
 
 The testes do not cover all parts of the code (As I skipped them and just hacked
 my way through as the project was about to be finished). However, no tests
@@ -31,11 +31,14 @@ to get good coverage quickly.
 
 ### A description of the files:
 
-#### Game
-  A little script that starts a standard Human vs. CPU game.
+#### bin/Game
+  A little script that starts a standard Human vs. CPU game:
+  ```
+  ruby bin/Game.rb
+  ```
   
 #### Board
-  A matrix representing the board. Can asked about full columns and coins can be dropped in the columns. It also features a colorful render function.
+  A matrix representing the board. Can asked if columns are full and coins can be dropped in the columns. It also features a colorful render function.
 
 #### AI
   An AI whose 'next_move' function returns the best move found at a given
@@ -65,7 +68,7 @@ to get good coverage quickly.
   my algorithm stops traversing the tree at a given depth. This can be
   thought of as a number of moves the AI 'thinks' forward. A search depth
   of 5 or below have turned out to give a reasonable response time. With the
-  optimisations mentioned below, it should be possible to go deeper.
+  optimisations mentioned below, it should be possible to go deeper. The function also cuts off if the board is full, or if one of the players has won.
 
 ### Heuristic
 
@@ -153,6 +156,17 @@ objects of matrixes of strings. These could be implemented with bits instead.
 Since there are 6\*7=42 cells, and they can have 3 values 'X','O' and '.', they
 could be represented with max 42\*2=84 bits. I have not measured the bitsize of
 a object of the Board class, but I'm pretty sure it's a lot bigger.
+
+### In the future
+
+If I were to continue development, this would be my next steps:
+
+* Make the classes smaller by splitting them up: A Heuristic class, a Render class etc.
+* Get full test coverage.
+* Implement some of the optimisations mentioned above.
+* A Script to connect the AI to Java (or maybe JRuby). I need that to access a CPU vs. CPU competition.
+* Work on the heuristic: e.g making the '4 coins = 1000' score even higher.
+* Connect the AI to a sinatra server, thus exposing connect 4 to the world.
 
 ### Conclusion
 
