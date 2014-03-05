@@ -24,7 +24,6 @@ end
   if player == "human"
     move = (gets.chomp).to_i
     while !input_valid?(move)
-      puts "input invalid"
       move = (gets.chomp).to_i
     end
 
@@ -45,6 +44,8 @@ end
   full = @board.full?
 
   if full || winner != 0
+    puts "_____________________"
+    puts @board
     if winner == 0 then puts "DRAW!" end
     if winner == 1 then puts "YOU LOSE!" end
     if winner == -1 then puts "YOU WIN!" end
